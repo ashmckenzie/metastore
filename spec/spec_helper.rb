@@ -1,3 +1,5 @@
+require 'fakefs/safe'
+require 'fakefs/spec_helpers'
 require 'pry-byebug'
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
