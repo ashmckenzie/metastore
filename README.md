@@ -25,11 +25,12 @@ Or install it yourself as:
 
 ## Usage
 
-There are three public methods hanging off `Metastore::Cabinet`:
+There are four public methods hanging off `Metastore::Cabinet`:
 
 * `#get('key')` or `<Metastore::Cabinet instance>['key']`
 * `#set('key', 'value')` or `<Metastore::Cabinet instance>['key'] = 'value'`
 * `#clear!`
+* `#contents`
 
 ### Setup
 
@@ -120,7 +121,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/metastore/fork )
+1. Fork it ( https://github.com/ashmckenzie/metastore/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
