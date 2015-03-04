@@ -32,12 +32,24 @@ There are four public methods hanging off `Metastore::Cabinet`:
 * `#clear!`
 * `#contents`
 
+When calling `#get()` or `#set()`:
+
+`key` can be expressed as follows:
+
+  * `key` - basic string key
+  * `:key` - basic symbol key (will be converted into string)
+  * `key1.key2` - using a `.` here allows nested keys to be defined.
+
+When calling `#set()`:
+
+`key` can be expressed as described above.  The YAML file is also immediately saved.
+
 ### Setup
 
 ```ruby
 require 'metastore'
 
-file = File.join(ENV['HOME'], '.metadata.yaml')
+file = File.join(ENV['HOME'], '.metastore.yaml')
 store = Metastore::Cabinet.new(file)
 ```
 
