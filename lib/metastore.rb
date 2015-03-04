@@ -1,5 +1,5 @@
-require "metastore/version"
+require 'metastore/version'
+require 'metastore/cabinet'
 
 module Metastore
-  # Your code goes here...
 end
