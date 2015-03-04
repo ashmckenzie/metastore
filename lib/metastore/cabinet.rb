@@ -22,6 +22,7 @@ module Metastore
 
     def clear!
       save!({})
+      true
     end
 
     def contents

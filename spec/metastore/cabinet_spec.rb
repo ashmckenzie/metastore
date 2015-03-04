@@ -45,5 +45,21 @@ describe Metastore::Cabinet, memfs: true do
       subject.clear!
       expect(File.read(file)).to eql("--- {}\n")
     end
+
+    context 'when the file cannot be cleared' do
+      before do
+        expect(File).to receive(:open).with(file.to_s, 'w').and_raise(StandardError.new('Any exception'))
+      end
+
+      it 'returns true' do
+        expect{ subject.clear! }.to raise_error(Metastore::Errors::CabinetCannotSet, 'Any exception')
+      end
+    end
+
+    context 'when the file can be cleared' do
+      it 'returns true' do
+        expect(subject.clear!).to eql(true)
+      end
+    end
   end
 end
