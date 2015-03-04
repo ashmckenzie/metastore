@@ -1,5 +1,36 @@
 shared_examples 'a Cabinet#set' do
 
+  it 'supports writing Hash values' do
+    subject.public_send(method_name, :key1, { key2: 'value' })
+    expect(File.read(file)).to eql("---\nkey1:\n  key2: value\n")
+  end
+
+  it 'supports writing Array values' do
+    subject.public_send(method_name, :key1, [ 'value' ])
+    expect(File.read(file)).to eql("---\nkey1:\n- value\n")
+  end
+
+  it 'turns symbol keys and values into strings' do
+    subject.public_send(method_name, :key1, :key1_value)
+    expect(File.read(file)).to eql("---\nkey1: key1_value\n")
+  end
+
+  context 'when the value cannot be set/saved' do
+    before do
+      expect(File).to receive(:open).with(file.to_s, 'w').and_raise(StandardError.new('Any exception'))
+    end
+
+    it 'returns true' do
+      expect{ subject.public_send(method_name, 'key1', 'key1.value') }.to raise_error(Metastore::Errors::CabinetCannotSet, 'Any exception')
+    end
+  end
+
+  context 'when the value can be set/saved' do
+    it 'returns true' do
+      expect(subject.public_send(method_name, 'key1', 'key1.value')).to eql(true)
+    end
+  end
+
   context 'when the file is empty' do
     it 'writes out the key and value' do
       subject.public_send(method_name, 'key1', 'key1.value')
@@ -36,21 +67,6 @@ shared_examples 'a Cabinet#set' do
         end
       end
     end
-  end
-
-  it 'supports writing Hash values' do
-    subject.public_send(method_name, :key1, { key2: 'value' })
-    expect(File.read(file)).to eql("---\nkey1:\n  key2: value\n")
-  end
-
-  it 'supports writing Array values' do
-    subject.public_send(method_name, :key1, [ 'value' ])
-    expect(File.read(file)).to eql("---\nkey1:\n- value\n")
-  end
-
-  it 'turns symbol keys and values into strings' do
-    subject.public_send(method_name, :key1, :key1_value)
-    expect(File.read(file)).to eql("---\nkey1: key1_value\n")
   end
 
 end

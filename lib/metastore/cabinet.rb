@@ -17,6 +17,7 @@ module Metastore
       current_contents = contents
       set_key_and_value(current_contents, split_key(key), value)
       save!(current_contents)
+      true
     end
 
     def clear!
@@ -69,6 +70,8 @@ module Metastore
       def save!(new_values)
         FileUtils.mkdir_p(file.dirname) unless file.exist?
         File.open(file.to_s, 'w') { |f| f.write(new_values.to_yaml) }
+      rescue => e
+        raise Errors::CabinetCannotSet.new(e.message)
       end
 
   end
