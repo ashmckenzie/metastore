@@ -25,11 +25,96 @@ Or install it yourself as:
 
 ## Usage
 
-TODO
+There are three public methods hanging off `Metastore::Cabinet`:
+
+* `#get('key')` or `<Metastore::Cabinet instance>['key']`
+* `#set('key', 'value')` or `<Metastore::Cabinet instance>['key'] = 'value'`
+* `#clear!`
+
+### Setup
+
+```ruby
+require 'metastore'
+
+file = File.join(ENV['HOME'], '.metadata.yaml')
+store = Metastore::Cabinet.new(file)
+```
+
+### Basic example
+
+```ruby
+store.clear!
+=> true
+
+store.contents
+=> {}
+
+store.get('key')
+=> nil
+
+store.set('key', 'value')
+=> true
+
+store.contents
+=> {"key"=>"value"}
+
+store.get('key')
+=> "value"
+```
+
+### Advanced examples
+
+When setting values, you can nest both keys and values:
+
+```ruby
+store.clear!
+=> true
+
+store.contents
+=> {}
+
+store.get('key1.key2')
+=> nil
+
+store.set('key1.key2', 'key.key2.value')
+=> true
+
+store.contents
+=> {"key1"=>{"key2"=>"key.key2.value"}}
+
+store.set('key3.key4', { 'key' => 'value' })
+=> true
+
+store.contents
+=> {"key1"=>{"key2"=>"key.key2.value"}, "key3"=>{"key4"=>{"key"=>"value"}}}
+```
+
+You can also use Hash notation:
+
+```ruby
+store.clear!
+=> true
+
+store.contents
+=> {}
+
+store['key1.key2']
+=> nil
+
+store['key1.key2'] = 'key.key2.value'
+=> true
+
+store.contents
+=> {"key1"=>{"key2"=>"key.key2.value"}}
+
+store['key3.key4'] = { 'key' => 'value' }
+=> true
+
+store.contents
+=> {"key1"=>{"key2"=>"key.key2.value"}, "key3"=>{"key4"=>{"key"=>"value"}}}
+```
 
 ## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
