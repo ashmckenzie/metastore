@@ -4,41 +4,74 @@ describe Metastore::Cabinet, memfs: true do
 
   include FakeFS::SpecHelpers
 
-  let(:file) { '/fake_file.yml' }
-  let(:contents) { {} }
+  let(:file) { '/fake_file.mixed' }
+  let(:contents) { {}.send("to_#{storage_type}".to_sym) }
 
-  subject { described_class.new(file) }
+  subject { described_class.new(file, storage_type: storage_type) }
 
   before(:example) do
-    File.open(file, 'w') { |f| f.write(contents.to_yaml) }
+    File.open(file, 'w') { |f| f.write(contents) }
   end
 
   describe '#get' do
     let(:method_name) { :get }
 
-    include_examples 'a Cabinet#get'
+    context 'for YAML' do
+      let(:storage_type) { :yaml }
+      include_examples 'a YAML Cabinet#get'
+    end
+
+    context 'for JSON' do
+      let(:storage_type) { :json }
+      include_examples 'a JSON Cabinet#get'
+    end
   end
 
   describe '#[]' do
     let(:method_name) { :[] }
 
-    include_examples 'a Cabinet#get'
+    context 'for YAML' do
+      let(:storage_type) { :yaml }
+      include_examples 'a YAML Cabinet#get'
+    end
+
+    context 'for JSON' do
+      let(:storage_type) { :json }
+      include_examples 'a JSON Cabinet#get'
+    end
   end
 
   describe '#set' do
     let(:method_name) { :set }
 
-    include_examples 'a Cabinet#set'
+    context 'for YAML' do
+      let(:storage_type) { :yaml }
+      include_examples 'a YAML Cabinet#set'
+    end
+
+    context 'for JSON' do
+      let(:storage_type) { :json }
+      include_examples 'a JSON Cabinet#set'
+    end
   end
 
   describe '#[]=' do
     let(:method_name) { :[]= }
 
-    include_examples 'a Cabinet#set'
+    context 'for YAML' do
+      let(:storage_type) { :yaml }
+      include_examples 'a YAML Cabinet#set'
+    end
+
+    context 'for JSON' do
+      let(:storage_type) { :json }
+      include_examples 'a JSON Cabinet#set'
+    end
   end
 
   describe '#clear!' do
-    let(:contents) { { 'key1' => 'key1.value' } }
+    let(:storage_type) { :yaml }
+    let(:contents) { { 'key1' => 'key1.value' }.to_yaml }
 
     it 'clears out the file' do
       expect(File.read(file)).to eql("---\nkey1: key1.value\n")

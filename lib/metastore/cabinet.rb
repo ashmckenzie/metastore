@@ -1,12 +1,12 @@
 require 'fileutils'
 require 'pathname'
-require 'yaml'
 
 module Metastore
   class Cabinet
 
-    def initialize(file)
+    def initialize(file, storage_type: :yaml)
       @file = Pathname.new(file).expand_path
+      @storage_type = storage_type
     end
 
     def get(key)
@@ -17,16 +17,14 @@ module Metastore
       current_contents = contents
       set_key_and_value(current_contents, split_key(key), value)
       save!(current_contents)
-      true
     end
 
     def clear!
       save!({})
-      true
     end
 
     def contents
-      file.exist? ? YAML.load(file.read) || {} : {}
+      storage.contents || {}
     end
 
     alias_method :[], :get
@@ -34,7 +32,11 @@ module Metastore
 
     private
 
-      attr_reader :file
+      attr_reader :file, :storage_type
+
+      def storage
+        @store || StorageFactory.from_sym(storage_type, file)
+      end
 
       def split_key(key)
         key.to_s.split('.')
@@ -70,7 +72,8 @@ module Metastore
 
       def save!(new_values)
         FileUtils.mkdir_p(file.dirname) unless file.exist?
-        File.open(file.to_s, 'w') { |f| f.write(new_values.to_yaml) }
+        storage.save!(new_values)
+        true
       rescue => e
         raise Errors::CabinetCannotSet.new(e.message)
       end
