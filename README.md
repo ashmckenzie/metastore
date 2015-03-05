@@ -68,6 +68,9 @@ store.get('key')
 store.set('key', 'value')
 => true
 
+store.get('key')
+=> "value"
+
 store.contents
 => {"key"=>"value"}
 
@@ -98,6 +101,9 @@ store.contents
 store.set('key3.key4', { 'key' => 'value' })
 => true
 
+store.get('key1.key2')
+=> "key.key2.value"
+
 store.contents
 => {"key1"=>{"key2"=>"key.key2.value"}, "key3"=>{"key4"=>{"key"=>"value"}}}
 ```
@@ -115,13 +121,19 @@ store['key1.key2']
 => nil
 
 store['key1.key2'] = 'key.key2.value'
-=> true
+=> "key.key2.value"
+
+store['key1.key2']
+=> "key.key2.value"
 
 store.contents
 => {"key1"=>{"key2"=>"key.key2.value"}}
 
 store['key3.key4'] = { 'key' => 'value' }
-=> true
+=> {"key"=>"value"}
+
+store['key3.key4']
+=> {"key"=>"value"}
 
 store.contents
 => {"key1"=>{"key2"=>"key.key2.value"}, "key3"=>{"key4"=>{"key"=>"value"}}}
