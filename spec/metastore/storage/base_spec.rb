@@ -23,7 +23,7 @@ describe Metastore::Storage::Base do
     context 'when file is empty' do
       let(:contents) { {}.to_yaml }
 
-      it 'returns an empty Hash' do
+      it 'raises an exception' do
         expect{ subject.contents }.to raise_error(NotImplementedError)
       end
     end
@@ -31,14 +31,14 @@ describe Metastore::Storage::Base do
     context 'when file is not empty' do
       let(:contents) { { 'key' => 'value' }.to_yaml }
 
-      it 'returns an empty Hash' do
+      it 'raises an exception' do
         expect{ subject.contents }.to raise_error(NotImplementedError)
       end
     end
   end
 
   describe '#save!' do
-    it 'saves the contents to file' do
+    it 'raise an exception' do
       expect{ subject.save!({}) }.to raise_error(NotImplementedError)
     end
   end
