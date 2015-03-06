@@ -35,7 +35,7 @@ module Metastore
       attr_reader :file, :storage_type
 
       def storage
-        @store || StorageFactory.from_sym(storage_type, file)
+        @store || StorageFactory.from_sym(storage_type).new(file)
       end
 
       def split_key(key)
