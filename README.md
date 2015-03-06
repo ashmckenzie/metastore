@@ -1,7 +1,7 @@
 # Metastore
 
 [![Gem Version](https://badge.fury.io/rb/metastore.svg)](http://badge.fury.io/rb/metastore)
-[![Build Status](https://travis-ci.org/ashmckenzie/metastore.svg?branch=wip)](https://travis-ci.org/ashmckenzie/metastore)
+[![Build Status](https://travis-ci.org/ashmckenzie/metastore.svg)](https://travis-ci.org/ashmckenzie/metastore)
 [![Code Climate](https://codeclimate.com/github/ashmckenzie/metastore/badges/gpa.svg)](https://codeclimate.com/github/ashmckenzie/metastore)
 [![Test Coverage](https://codeclimate.com/github/ashmckenzie/metastore/badges/coverage.svg)](https://codeclimate.com/github/ashmckenzie/metastore)
 [![Dependency Status](https://gemnasium.com/ashmckenzie/metastore.svg)](https://gemnasium.com/ashmckenzie/metastore)
