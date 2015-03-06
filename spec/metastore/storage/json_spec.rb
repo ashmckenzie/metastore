@@ -27,6 +27,14 @@ describe Metastore::Storage::JSON do
         expect(subject.contents).to eql({})
       end
     end
+
+    context 'when file is not empty' do
+      let(:contents) { { 'key' => 'value' }.to_json }
+
+      it 'returns a Hash' do
+        expect(subject.contents).to eql({ "key" => "value" })
+      end
+    end
   end
 
   describe '#save!' do
