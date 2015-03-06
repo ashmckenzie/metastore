@@ -9,7 +9,7 @@ describe Metastore::Storage::JSON do
 
   subject { described_class.new(file) }
 
-  before(:example) do
+  before do
     File.open(file, 'w') { |f| f.write(contents) } if contents
   end
 

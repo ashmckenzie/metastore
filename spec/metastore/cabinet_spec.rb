@@ -9,7 +9,7 @@ describe Metastore::Cabinet do
 
   subject { described_class.new(file, storage_type: storage_type) }
 
-  before(:example) do
+  before do
     File.open(file, 'w') { |f| f.write(contents) }
   end
 
