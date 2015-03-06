@@ -47,7 +47,7 @@ module Metastore
         input[current_key] = {} unless input[current_key]
 
         if key.empty?
-          input[current_key] = recursive_stringify_keys(value)
+          input[current_key] = stringify_keys(value)
           input
         else
           input[current_key] = {} unless input[current_key].is_a?(Hash)
@@ -55,16 +55,16 @@ module Metastore
         end
       end
 
-      def recursive_stringify_keys(input)
+      def stringify_keys(input)
         case input
         when Hash
           Hash[
             input.map do |k, v|
-              [ k.respond_to?(:to_s) ? k.to_s : k, recursive_stringify_keys(v) ]
+              [ k.respond_to?(:to_s) ? k.to_s : k, stringify_keys(v) ]
             end
           ]
         when Enumerable
-          input.map { |v| recursive_stringify_keys(v) }
+          input.map { |v| stringify_keys(v) }
         else
           input.is_a?(Symbol) ? input.to_s : input
         end
