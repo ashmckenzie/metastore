@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Metastore::Cabinet, memfs: true do
+describe Metastore::Cabinet do
 
   include FakeFS::SpecHelpers
 
