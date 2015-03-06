@@ -1,11 +1,12 @@
 # Metastore
 
 [![Gem Version](https://badge.fury.io/rb/metastore.svg)](http://badge.fury.io/rb/metastore)
-[![Code Climate](https://codeclimate.com/github/ashmckenzie/metastore/badges/gpa.svg)](https://codeclimate.com/github/ashmckenzie/metastore)
 [![Build Status](https://travis-ci.org/ashmckenzie/metastore.svg?branch=wip)](https://travis-ci.org/ashmckenzie/metastore)
+[![Code Climate](https://codeclimate.com/github/ashmckenzie/metastore/badges/gpa.svg)](https://codeclimate.com/github/ashmckenzie/metastore)
+[![Test Coverage](https://codeclimate.com/github/ashmckenzie/metastore/badges/coverage.svg)](https://codeclimate.com/github/ashmckenzie/metastore)
 [![Dependency Status](https://gemnasium.com/ashmckenzie/metastore.svg)](https://gemnasium.com/ashmckenzie/metastore)
 
-Store and retrieve meta information with ease
+Store and retrieve meta information with ease.  Currently YAML and JSON are the supported storage backends.
 
 ## Installation
 
@@ -50,7 +51,12 @@ When calling `#set()`:
 require 'metastore'
 
 file = File.join(ENV['HOME'], '.metastore.yaml')
-store = Metastore::Cabinet.new(file)
+
+# YAML (default)
+store = Metastore::Cabinet.new(file, storage_type: :yaml)
+
+# JSON
+store = Metastore::Cabinet.new(file, storage_type: :json)
 ```
 
 ### Basic example
