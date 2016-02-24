@@ -62,10 +62,10 @@ describe Metastore::Storage::JSON do
       context 'when the values are complex' do
         let(:values) {
           {
-            "array": [],
-            "hash": {},
-            "nested_hash_in_array": [ {} ],
-            "nested_arrays_in_hash": { "array": [] }
+            "array"                 => [],
+            "hash"                  => {},
+            "nested_hash_in_array"  => [ {} ],
+            "nested_arrays_in_hash" => { "array" => [] }
           }
         }
 

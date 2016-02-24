@@ -62,15 +62,15 @@ describe Metastore::Storage::YAML do
       context 'when the values are complex' do
         let(:values) {
           {
-            "array": [],
-            "hash": {},
-            "nested_hash_in_array": [ {} ],
-            "nested_arrays_in_hash": { "array": [] }
+            "array"                 => [],
+            "hash"                  => {},
+            "nested_hash_in_array"  => [ {} ],
+            "nested_arrays_in_hash" => { "array" => [] }
           }
         }
 
         it 'saves the contents to file' do
-          expect(file.read).to eql("---\n:array: []\n:hash: {}\n:nested_hash_in_array:\n- {}\n:nested_arrays_in_hash:\n  :array: []\n")
+          expect(file.read).to eql("---\narray: []\nhash: {}\nnested_hash_in_array:\n- {}\nnested_arrays_in_hash:\n  array: []\n")
         end
       end
     end
