@@ -63,7 +63,8 @@ shared_examples 'a JSON Cabinet#set' do
 
         it 'overwrites the value' do
           subject.public_send(method_name, 'key1.key1.key1', 'key1.key1.key1.value')
-          expect(File.read(file)).to eql(%q({"key1":{"key1":{"key1":"key1.key1.key1.value"}}}))
+          subject.public_send(method_name, 'key2/key2/key2', 'key2.key2.key2.value')
+          expect(File.read(file)).to eql(%q({"key1":{"key1":{"key1":"key1.key1.key1.value"}},"key2":{"key2":{"key2":"key2.key2.key2.value"}}}))
         end
       end
     end

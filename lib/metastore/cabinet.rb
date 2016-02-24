@@ -4,9 +4,9 @@ require 'pathname'
 module Metastore
   class Cabinet
 
-    def initialize(file, separator: '.', storage_type: :yaml)
+    def initialize(file, separators: %w(. /), storage_type: :yaml)
       @file = Pathname.new(file).expand_path
-      @separator = separator
+      @separators = separators.map { |x| "\\#{x}" }.join('|')
       @storage_type = storage_type
     end
 
@@ -35,14 +35,14 @@ module Metastore
 
     private
 
-      attr_reader :file, :separator, :storage_type
+      attr_reader :file, :separators, :storage_type
 
       def storage
         @store || StorageFactory.from_sym(storage_type).new(file)
       end
 
       def split_key(key)
-        key.to_s.split(separator)
+        key.to_s.split(Regexp.new(separators))
       end
 
       def set_key_and_value(input, key, value)

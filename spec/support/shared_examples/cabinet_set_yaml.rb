@@ -63,7 +63,8 @@ shared_examples 'a YAML Cabinet#set' do
 
         it 'overwrites the value' do
           subject.public_send(method_name, 'key1.key1.key1', 'key1.key1.key1.value')
-          expect(File.read(file)).to eql("---\nkey1:\n  key1:\n    key1: key1.key1.key1.value\n")
+          subject.public_send(method_name, 'key2/key2/key2', 'key2.key2.key2.value')
+          expect(File.read(file)).to eql("---\nkey1:\n  key1:\n    key1: key1.key1.key1.value\nkey2:\n  key2:\n    key2: key2.key2.key2.value\n")
         end
       end
     end
