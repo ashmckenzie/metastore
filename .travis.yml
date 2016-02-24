@@ -1,8 +1,10 @@
 language: ruby
 rvm:
+  - 2.1
   - 2.2
+  - 2.3
 branches:
   only:
     - master
     - wip
-script: bundle exec rake spec
+script: bundle exec rake
