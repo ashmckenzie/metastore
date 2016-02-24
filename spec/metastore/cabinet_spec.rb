@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Metastore::Cabinet do
-
   include FakeFS::SpecHelpers
 
   let(:file) { '/fake_file.mixed' }

@@ -1,21 +1,21 @@
 require 'spec_helper'
 
 describe Metastore::Storage::Base do
-
   include FakeFS::SpecHelpers
 
-  let(:contents) { false }
+  let(:contents) { '' }
   let(:file) { Pathname.new('/fake_file.mixed') }
 
   subject { described_class.new(file) }
 
   before do
-    File.open(file, 'w') { |f| f.write(contents) } if contents
+    File.open(file.to_s, 'w') { |f| f.write(contents) } if contents
   end
 
   describe '#contents' do
     context 'when file does not exist' do
       it 'returns an empty Hash' do
+        expect(file).to receive(:exist?).and_return(false)
         expect(subject.contents).to eql({})
       end
     end

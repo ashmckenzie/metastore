@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Metastore::Storage::YAML do
-
   include FakeFS::SpecHelpers
 
   let(:contents) { false }
@@ -10,7 +9,7 @@ describe Metastore::Storage::YAML do
   subject { described_class.new(file) }
 
   before do
-    File.open(file, 'w') { |f| f.write(contents) } if contents
+    File.open(file.to_s, 'w') { |f| f.write(contents) } if contents
   end
 
   describe '#contents' do

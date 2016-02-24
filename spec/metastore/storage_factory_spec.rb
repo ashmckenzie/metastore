@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Metastore::StorageFactory do
-
   subject { described_class }
 
   describe '.from_sym' do
