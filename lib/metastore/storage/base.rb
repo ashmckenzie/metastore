@@ -24,10 +24,9 @@ module Metastore
           raise NotImplementedError
         end
 
-        def to_write(values)
+        def to_write(_)
           raise NotImplementedError
         end
-
     end
   end
 end

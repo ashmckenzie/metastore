@@ -4,13 +4,16 @@ require 'pathname'
 module Metastore
   class Cabinet
 
-    def initialize(file, storage_type: :yaml)
+    def initialize(file, separator: '.', storage_type: :yaml)
       @file = Pathname.new(file).expand_path
+      @separator = separator
       @storage_type = storage_type
     end
 
     def get(key)
-      split_key(key).inject(contents) { |c, k| c.is_a?(Hash) ? c[k] : nil }
+      split_key(key).inject(contents) do |c, k|
+        c.is_a?(Hash) ? c[k] : nil
+      end
     end
 
     def set(key, value)
@@ -27,19 +30,19 @@ module Metastore
       storage.contents || {}
     end
 
-    alias_method :[], :get
-    alias_method :[]=, :set
+    alias [] :get
+    alias []= :set
 
     private
 
-      attr_reader :file, :storage_type
+      attr_reader :file, :separator, :storage_type
 
       def storage
         @store || StorageFactory.from_sym(storage_type).new(file)
       end
 
       def split_key(key)
-        key.to_s.split('.')
+        key.to_s.split(separator)
       end
 
       def set_key_and_value(input, key, value)
@@ -75,8 +78,7 @@ module Metastore
         storage.save!(new_values)
         true
       rescue => e
-        raise Errors::CabinetCannotSet.new(e.message)
+        raise Errors::CabinetCannotSet, e.message
       end
-
   end
 end
